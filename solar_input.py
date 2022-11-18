@@ -4,6 +4,7 @@
 from solar_objects import Star, Planet
 from solar_vis import DrawableObject
 
+
 def read_space_objects_data_from_file(input_filename):
     """Cчитывает данные о космических объектах из файла, создаёт сами объекты
     и вызывает создание их графических образов
@@ -22,11 +23,11 @@ def read_space_objects_data_from_file(input_filename):
             object_type = line.split()[0].lower()
             if object_type == "star":
                 star = Star()
-                parse_star_parameters(line, star)
+                parse_object_parameters(line, star)
                 objects.append(star)
             elif object_type == "planet":
                 planet = Planet()
-                parse_planet_parameters(line, planet)
+                parse_object_parameters(line, planet)
                 objects.append(planet)
             else:
                 print("Unknown space object")
@@ -34,7 +35,15 @@ def read_space_objects_data_from_file(input_filename):
     return [DrawableObject(obj) for obj in objects]
 
 
-def parse_star_parameters(line, star):
+def parse_object_parameters(line, obj):
+    obj.type = type(obj)
+    obj.R = line[1]
+    obj.color = line[2]
+    obj.m = line[3]
+    obj.x = line[4]
+    obj.y = line[5]
+    obj.Vx = line[6]
+    obj.Vy = line[7]
     """Считывает данные о звезде из строки.
 
     Входная строка должна иметь слеюущий формат:
@@ -47,33 +56,17 @@ def parse_star_parameters(line, star):
 
     Star 10 red 1000 1 2 3 4
 
+    
     Параметры:
 
     **line** — строка с описание звезды.
 
     **star** — объект звезды.
+
     """
-    pass  # FIXME: допишите парсер
 
-def parse_planet_parameters(line, planet):
-    """Считывает данные о планете из строки.
-    Входная строка должна иметь слеюущий формат:
+    return obj
 
-    Planet <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
-
-    Здесь (x, y) — координаты планеты, (Vx, Vy) — скорость.
-
-    Пример строки:
-
-    Planet 10 red 1000 1 2 3 4
-
-    Параметры:
-
-    **line** — строка с описание планеты.
-
-    **planet** — объект планеты.
-    """
-    pass  # FIXME: допишите парсер
 
 def write_space_objects_data_to_file(output_filename, space_objects):
     """Сохраняет данные о космических объектах в файл.
@@ -93,7 +86,7 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
             print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
-            # FIXME!
+            out_file.write(f'{str(obj.type)}, {obj.R}, {obj.color}, {obj.m}, {obj.x}, {obj.y}, {obj.Vx}, {obj.Vy}')
 
 
 if __name__ == "__main__":
