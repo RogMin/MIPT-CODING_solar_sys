@@ -86,5 +86,5 @@ class DrawableObject:
         self.obj = obj
 
     def draw(self, surface):
-            # pass  #FIXME
         Drawer.update(self.obj, surface)
+

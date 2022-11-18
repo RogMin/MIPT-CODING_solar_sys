@@ -15,17 +15,12 @@ def read_space_objects_data_from_file(input_filename):
     """
 
     objects = []
-    with open(input_filename, 'r') as input_file:
-        print(input_file)
+    with open(input_filename, 'r', encoding="utf8") as input_file:
         for line in input_file.readlines():
-            print(line)
             if len(line.strip()) == 0 or line[0] == '#':
                 continue  # пустые строки и строки-комментарии пропускаем
-
-            print("s")
             object_type = line.split()[0].lower()
             if object_type == "star":
-
                 star = Star()
                 parse_object_parameters(line, star)
                 objects.append(star)
