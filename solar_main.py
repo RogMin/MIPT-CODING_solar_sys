@@ -2,6 +2,8 @@
 # license: GPLv3
 
 import pygame as pg
+import pygame.display
+
 from solar_vis import *
 from solar_model import *
 from solar_input import *
@@ -73,7 +75,7 @@ def open_file(drawer):
 
     model_time = 0.0
     in_filename = "solar_system.txt"
-    space_objects = read_space_objects_data_from_file(in_filename,drawer)
+    space_objects = read_space_objects_data_from_file(in_filename, drawer)
     max_distance = max([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
 
@@ -82,8 +84,9 @@ def handle_events(events, menu):
     global alive
     for event in events:
         menu.react(event)
-        if event.type == pg.QUIT:
-            alive = False
+        match event.type:
+            case pg.QUIT:
+                alive = False
 
 
 def slider_to_real(val):
@@ -154,7 +157,7 @@ def main():
     screen = pg.display.set_mode((width, height))
     last_time = time.perf_counter()
     drawer = Drawer(screen)
-    menu, box, timer = init_ui(screen,drawer)
+    menu, box, timer = init_ui(screen, drawer)
     perform_execution = True
 
     while alive:
@@ -168,9 +171,9 @@ def main():
         last_time = cur_time
         drawer.update(space_objects)
         time.sleep(1.0 / 60)
+        pygame.display.update()
 
     print('Modelling finished!')
-
 
 if __name__ == "__main__":
     main()

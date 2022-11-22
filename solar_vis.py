@@ -72,15 +72,21 @@ class Drawer:
         self.objects = objects
 
     def draw(self, object):
+        self.scale(object)
         self.objects.append(object)
         self.update(self.objects)
 
-    def update(self, figures):
-        self.screen.fill((0, 0, 0))
+    def scale(self, obj):
+        obj.x = scale_x(obj.x)
+        obj.y = scale_y(obj.y)
+        obj.R = obj.R * scale_factor
+        print(obj.x, obj.y)
 
+    def update(self, figures):
+        #self.screen.fill((0, 0, 0))
         for figure in figures:
             pg.draw.circle(self.screen, figure.color, (figure.x, figure.y), figure.R)
         #self.screen.blit()
-        #self.screen.update()
         pg.display.update()
+
 
