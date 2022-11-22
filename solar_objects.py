@@ -18,6 +18,7 @@ class Space_Body:
         self.Fy = Fy
         self.R = R
         self.color = color
+        print(self)
 
 
 class Star(Space_Body):

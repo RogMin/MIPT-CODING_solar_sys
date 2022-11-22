@@ -14,10 +14,10 @@ header_font = "Arial-16"
 window_width = 900
 """Ширина окна"""
 
-window_height = 12
+window_height = 1200
 """Высота окна"""
 
-scale_factor = 1
+scale_factor = 0.5
 """Масштабирование экранных координат по отношению к физическим.
 
 Тип: float
@@ -28,7 +28,7 @@ scale_factor = 1
 def calculate_scale_factor(max_distance):
     """Вычисляет значение глобальной переменной **scale_factor** по данной характерной длине"""
     global scale_factor
-    scale_factor = 0.5*min(window_height, window_width)/max_distance
+    #scale_factor = 0.5*min(window_height, window_width)/max_distance
     print('Scale factor:', scale_factor)
 
 
@@ -42,8 +42,11 @@ def scale_x(x):
 
     **x** — x-координата модели.
     """
+    return x
+   # res = int(x*scale_factor) + window_width//2
+   # return res
 
-    return int(x*scale_factor) + window_width//2
+
 
 
 def scale_y(y):
@@ -58,8 +61,9 @@ def scale_y(y):
     **y** — y-координата модели.
     """
     # pass  #FIXME
-    return int(y*scale_factor) + window_height // 2
-
+   # res = int(y*scale_factor) + window_height // 2
+    #return res
+    return y
 
 
 if __name__ == "__main__":
@@ -72,22 +76,22 @@ class Drawer:
         self.screen = screen
         self.objects = objects
 
-    def draw(self, object):
-        self.scale(object)
-        self.objects.append(object)
+    def draw(self, objects):
+        print(object)
+        self.objects = objects
         self.update(self.objects)
 
     def scale(self, obj):
         obj.x = scale_x(obj.x)
         obj.y = scale_y(obj.y)
-        obj.R = obj.R * scale_factor
-        print(obj.x, obj.y)
+     #   obj.R = obj.R * scale_factor
 
     def update(self, figures):
-        #self.screen.fill((0, 0, 0))
         for figure in figures:
+           # self.screen.fill((0,0,0))
+            self.scale(figure)
+            print((figure.x, figure.y),figure.R)
             pg.draw.circle(self.screen, figure.color, (figure.x, figure.y), figure.R)
-        #self.screen.blit()
         pg.display.update()
 
 

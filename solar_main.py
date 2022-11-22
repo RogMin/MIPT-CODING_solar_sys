@@ -159,7 +159,7 @@ def main():
     drawer = Drawer(screen)
     menu, box, timer = init_ui(screen, drawer)
     perform_execution = True
-
+    start_execution()
     while alive:
         handle_events(pg.event.get(), menu)
         cur_time = time.perf_counter()

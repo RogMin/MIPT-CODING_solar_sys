@@ -32,12 +32,11 @@ def read_space_objects_data_from_file(input_filename,Drawer):
                 objects.append(planet)
             else:
                 print("Unknown space object")
-    [Drawer.draw(obj) for obj in objects]
+    Drawer.draw(objects)
     return objects
 
 
 def parse_object_parameters(line, obj):
-
     obj.type = line[0]
     obj.R = float(line[1])
     obj.color = line[2]
@@ -47,38 +46,18 @@ def parse_object_parameters(line, obj):
     obj.Vx = float(line[6])
     obj.Vy = float(line[7])
     """Считывает данные о звезде из строки.
-
-    Входная строка должна иметь слеюущий формат:
-
     Star <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
-
-    Здесь (x, y) — координаты зведы, (Vx, Vy) — скорость.
-
-    Пример строки:
-
-    Star 10 red 1000 1 2 3 4
-
-    
-    Параметры:
-
-    **line** — строка с описание звезды.
-
-    **star** — объект звезды.
-
     """
-
     return obj
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
     """Сохраняет данные о космических объектах в файл.
 
-    Строки должны иметь следующий формат:
-
     Star <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
 
     Planet <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
-
+]
     Параметры:
 
     **output_filename** — имя входного файла
