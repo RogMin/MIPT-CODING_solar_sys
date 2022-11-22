@@ -67,24 +67,20 @@ if __name__ == "__main__":
 
 
 class Drawer:
-    def __init__(self, screen):
+    def __init__(self, screen = 0, objects = []):
         self.screen = screen
+        self.objects = objects
 
+    def draw(self, object):
+        self.objects.append(object)
+        self.update(self.objects)
 
-    def update(self, figures, ui):
+    def update(self, figures):
         self.screen.fill((0, 0, 0))
+
         for figure in figures:
-            figure.draw(self.screen)
-        
-        ui.blit()
-        ui.update()
+            pg.draw.circle(self.screen, figure.color, (int(figure.x), int(figure.y)), figure.R)
+        #self.screen.blit()
+        #self.screen.update()
         pg.display.update()
-
-
-class DrawableObject:
-    def __init__(self, obj):
-        self.obj = obj
-
-    def draw(self, surface):
-        Drawer.update(self.obj, surface)
 

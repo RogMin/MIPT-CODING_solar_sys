@@ -62,7 +62,7 @@ def stop_execution():
     alive = False
 
 
-def open_file():
+def open_file(drawer):
     """Открывает диалоговое окно выбора имени файла и вызывает
     функцию считывания параметров системы небесных тел из данного файла.
     Считанные объекты сохраняются в глобальный список space_objects
@@ -73,7 +73,7 @@ def open_file():
 
     model_time = 0.0
     in_filename = "solar_system.txt"
-    space_objects = read_space_objects_data_from_file(in_filename)
+    space_objects = read_space_objects_data_from_file(in_filename,drawer)
     max_distance = max([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
 
@@ -95,7 +95,7 @@ def slider_reaction(event):
     time_scale = slider_to_real(event.el.get_value())
 
 
-def init_ui(screen):
+def init_ui(screen,drawer):
     global browser
     slider = thorpy.SliderX(100, (-10, 10), "Simulation speed")
     slider.user_func = slider_reaction
@@ -104,7 +104,7 @@ def init_ui(screen):
     button_play = thorpy.make_button("Play", func=start_execution)
     timer = thorpy.OneLineText("Seconds passed")
 
-    button_load = thorpy.make_button(text="Load a file", func=open_file)
+    button_load = thorpy.make_button(text="Load a file", func=open_file(drawer))
 
     box = thorpy.Box(elements=[
         slider,
@@ -154,7 +154,7 @@ def main():
     screen = pg.display.set_mode((width, height))
     last_time = time.perf_counter()
     drawer = Drawer(screen)
-    menu, box, timer = init_ui(screen)
+    menu, box, timer = init_ui(screen,drawer)
     perform_execution = True
 
     while alive:
@@ -166,7 +166,7 @@ def main():
             timer.set_text(text)
 
         last_time = cur_time
-        drawer.update(space_objects, box)
+        drawer.update(space_objects)
         time.sleep(1.0 / 60)
 
     print('Modelling finished!')

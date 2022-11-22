@@ -2,10 +2,11 @@
 # license: GPLv3
 
 from solar_objects import Star, Planet
-from solar_vis import DrawableObject
 
 
-def read_space_objects_data_from_file(input_filename):
+
+
+def read_space_objects_data_from_file(input_filename,Drawer):
     """Cчитывает данные о космических объектах из файла, создаёт сами объекты
     и вызывает создание их графических образов
 
@@ -30,8 +31,8 @@ def read_space_objects_data_from_file(input_filename):
                 objects.append(planet)
             else:
                 print("Unknown space object")
-
-    return [DrawableObject(obj) for obj in objects]
+    [Drawer.draw(obj) for obj in objects]
+    return objects
 
 
 def parse_object_parameters(line, obj):
