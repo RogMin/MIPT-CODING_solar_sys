@@ -161,6 +161,7 @@ def main():
     perform_execution = True
     start_execution()
     while alive:
+        screen.fill((0,0,0))
         handle_events(pg.event.get(), menu)
         cur_time = time.perf_counter()
         if perform_execution:
