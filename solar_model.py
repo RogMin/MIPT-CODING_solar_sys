@@ -21,11 +21,12 @@ def calculate_force(body, space_objects):
             continue  # тело не действует гравитационной силой на само себя!
         r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
         r = max(r, body.R) # FIXME: обработка аномалий при прохождении одного тела сквозь другое
+
         if r - body.R:
-
-            body.Fx = gravitational_constant * body.m * obj.m / ((body.x - obj.x)**2)
-            body.Fy = gravitational_constant * body.m * obj.m / ((body.y - obj.y)**2)
-
+            if body.x - obj.x != 0:
+                body.Fx = gravitational_constant * body.m * obj.m / ((body.x - obj.x) ** 2)
+            if body.y - obj.y != 0:
+                body.Fy = gravitational_constant * body.m * obj.m / ((body.y - obj.y) ** 2)
         else:
             body.Vx = -body.Vx
             body.Vy = -body.Vy
