@@ -66,6 +66,7 @@ if __name__ == "__main__":
     print("This module is not for direct call!")
 
 
+
 class Drawer:
     def __init__(self, screen = 0, objects = []):
         self.screen = screen
