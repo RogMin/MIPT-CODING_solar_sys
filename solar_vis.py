@@ -79,7 +79,7 @@ class Drawer:
         self.screen.fill((0, 0, 0))
 
         for figure in figures:
-            pg.draw.circle(self.screen, figure.color, (int(figure.x), int(figure.y)), figure.R)
+            pg.draw.circle(self.screen, figure.color, (figure.x, figure.y), figure.R)
         #self.screen.blit()
         #self.screen.update()
         pg.display.update()

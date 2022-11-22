@@ -21,6 +21,7 @@ def read_space_objects_data_from_file(input_filename,Drawer):
             if len(line.strip()) == 0 or line[0] == '#':
                 continue  # пустые строки и строки-комментарии пропускаем
             object_type = line.split()[0].lower()
+            line = line.split(' ')
             if object_type == "star":
                 star = Star()
                 parse_object_parameters(line, star)
@@ -36,14 +37,15 @@ def read_space_objects_data_from_file(input_filename,Drawer):
 
 
 def parse_object_parameters(line, obj):
+
     obj.type = line[0]
-    obj.R = line[1]
+    obj.R = float(line[1])
     obj.color = line[2]
-    obj.m = line[3]
-    obj.x = line[4]
-    obj.y = line[5]
-    obj.Vx = line[6]
-    obj.Vy = line[7]
+    obj.m = float(line[3])
+    obj.x = float(line[4])
+    obj.y = float(line[5])
+    obj.Vx = float(line[6])
+    obj.Vy = float(line[7])
     """Считывает данные о звезде из строки.
 
     Входная строка должна иметь слеюущий формат:
