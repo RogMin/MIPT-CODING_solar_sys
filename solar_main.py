@@ -1,16 +1,12 @@
 # coding: utf-8
 # license: GPLv3
 
-import pygame as pg
 from solar_vis import *
 from solar_model import *
 from solar_input import *
-from solar_objects import *
 import thorpy
 import time
 import numpy as np
-
-timer = None
 
 alive = True
 
@@ -64,7 +60,6 @@ def open_file():
     Считанные объекты сохраняются в глобальный список space_objects
     """
     global space_objects
-    global browser
     global model_time
 
     model_time = 0.0
@@ -125,29 +120,18 @@ def main():
     """Главная функция главного модуля.
     Создаёт объекты графического дизайна библиотеки tkinter: окно, холст, фрейм с кнопками, кнопки.
     """
-    
-    global physical_time
-    global displayed_time
-    global time_step
-    global time_speed
-    global space
-    global start_button
+
     global perform_execution
     global timer
 
     print('Modelling started!')
     physical_time = 0
-
     pg.init()
-    
-    width = 1000
-    height = 900
-    screen = pg.display.set_mode((width, height))
+    screen = pg.display.set_mode((window_width, window_height))
     last_time = time.perf_counter()
     drawer = Drawer(screen)
     menu, box, timer = init_ui(screen)
     perform_execution = True
-
     while alive:
         handle_events(pg.event.get(), menu)
         cur_time = time.perf_counter()
@@ -159,7 +143,7 @@ def main():
         last_time = cur_time
         drawer.update(space_objects, box)
         time.sleep(1.0 / 60)
-
+    write_space_objects_data_to_file("modelling result.txt",space_objects)
     print('Modelling finished!')
 
 if __name__ == "__main__":
