@@ -1,9 +1,10 @@
 # coding: utf-8
 # license: GPLv3
 
-from solar_vis import *
-from solar_model import *
-from solar_input import *
+import pygame as pg
+import solar_vis as visual_part
+import solar_model as physical_part
+import solar_input as input
 import thorpy
 import time
 import numpy as np
@@ -32,8 +33,7 @@ def execution(delta):
     При perform_execution == True функция запрашивает вызов самой себя по таймеру через от 1 мс до 100 мс.
     """
     global model_time
-    global displayed_time
-    recalculate_space_objects_positions([dr.obj for dr in space_objects], delta)
+    physical_part.recalculate_space_objects_positions([dr.obj for dr in space_objects], delta)
     model_time += delta
 
 
@@ -68,9 +68,9 @@ def open_file():
 
     model_time = 0.0
     in_filename = "solar_system.txt"
-    space_objects = read_space_objects_data_from_file(in_filename)
+    space_objects = input.load_objects_data(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
-    calculate_scale_factor(max_distance)
+    visual_part.calculate_scale_factor(max_distance)
 
 
 def handle_events(events, menu):
@@ -131,9 +131,9 @@ def main():
     global perform_execution
     print('Modelling started!')
     pg.init()
-    screen = pg.display.set_mode((window_width, window_height))
+    screen = pg.display.set_mode((visual_part.window_width, visual_part.window_height))
     last_time = time.perf_counter()
-    drawer = Drawer(screen)
+    drawer = visual_part.Drawer(screen)
     menu, box, timer = init_ui(screen)
     perform_execution = True
     while alive:
@@ -146,7 +146,7 @@ def main():
         last_time = cur_time
         drawer.update(space_objects, box)
         time.sleep(1.0 / 60)
-    write_space_objects_data_to_file("modelling result.txt", space_objects)
+    input.save_objects_data("modelling result.txt", space_objects)
     print('Modelling finished!')
 
 

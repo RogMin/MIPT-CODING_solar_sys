@@ -5,7 +5,7 @@ from solar_objects import AstroObject
 from solar_vis import DrawableObject
 
 
-def read_space_objects_data_from_file(input_filename):
+def load_objects_data(input_filename):
     """Cчитывает данные о космических объектах из файла, создаёт сами объекты
     и вызывает создание их графических образов
 
@@ -38,7 +38,7 @@ def parse_star_object_parameters(line, obj):
     return obj
 
 
-def write_space_objects_data_to_file(output_filename, space_objects):
+def save_objects_data(output_filename, space_objects):
     """Сохраняет данные о космических объектах в файл.
 
     Star <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
